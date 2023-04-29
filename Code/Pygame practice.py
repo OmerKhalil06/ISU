@@ -29,7 +29,7 @@ WINNER_FONT = pygame.font.SysFont('comicsans', 100)
 FPS = 120 #? capped frame rate 
 VEL = 5 #? velocity 
 BULLET_VEL = 7 #? create velocity for bullet
-MAX_BULLETS = 3  
+MAX_BULLETS = 10
 SPACESHIP_WIDTH,SPACESHIP_HEIGHT = 55, 40
 
 YELLOW_HIT=pygame.USEREVENT+1 #? represnts the number for the user event 
