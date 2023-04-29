@@ -20,8 +20,8 @@ YELLOW = (255, 255, 0)
 
 BORDER = pygame.Rect(WIDTH//2 - 5, 0, 10, HEIGHT) #? create a rectangle for boder with x, y, w, h
 
-BULLET_HIT_SOUND = pygame.mixer.Sound(os.path.join('assets', 'Assets_Grenade+1.mp3'))
-BULLET_FIRE_SOUND = pygame.mixer.Sound(os.path.join('assets', 'Assets_Gun+Silencer.mp3'))
+BULLET_HIT_SOUND = pygame.mixer.Sound(os.path.join('tutorial assets', 'Assets_Grenade+1.mp3'))
+BULLET_FIRE_SOUND = pygame.mixer.Sound(os.path.join('tutorial assets', 'Assets_Gun+Silencer.mp3'))
 
 HEALTH_FONT = pygame.font.SysFont('comicsans', 30) #size 
 WINNER_FONT = pygame.font.SysFont('comicsans', 100)
@@ -36,10 +36,10 @@ YELLOW_HIT=pygame.USEREVENT+1 #? represnts the number for the user event
 RED_HIT = pygame.USEREVENT +2 #! user evnts to check if an event occurs 
 
 YELLOW_SPACESHIP_IMAGE = pygame.image.load(
-    os.path.join('assets','spaceship_yellow.png')) #? creating the path to access image 
+    os.path.join('tutorial assets','spaceship_yellow.png')) #? creating the path to access image 
 RED_SPACESHIP_IMAGE = pygame.image.load(
-    os.path.join('assets','spaceship_red.png'))
-SPACE = pygame.transform.scale(pygame.image.load(os.path.join('assets', 'space.png')), (WIDTH, HEIGHT))
+    os.path.join('tutorial assets','spaceship_red.png'))
+SPACE = pygame.transform.scale(pygame.image.load(os.path.join('tutorial assets', 'space.png')), (WIDTH, HEIGHT))
 ''' 
 YELLOW_SPACESHIP = pygame.transform.scale(
     YELLOW_SPACESHIP_IMAGE, (55, 40)) #? resize image with name and size
