@@ -14,14 +14,16 @@ WIDTH , HEIGHT = 1200, 700
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
 #? images defined 
-background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'ma6jAJ.jpg')), (WIDTH, HEIGHT))
+background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'cat.test.jpg')), (WIDTH, HEIGHT))
 blue_fighter = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'Blue1.png')), (100, 200))
 red_fighter = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'Red1.png')), (100,200))
 
 def draw_window(): #? draw window to create images 
     WINDOW.blit(background, (0,0)) #? background is drawn on window 
     pygame.draw.rect(WINDOW, (255,255,255), pygame.Rect(0, 600, 1200, 100)) 
+    WINDOW.blit(blue_fighter,(1000, 400))
     WINDOW.blit(red_fighter, (1000,400)) #? blit = method to place on screen 
+    
     
     pygame.display.update()
     
