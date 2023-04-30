@@ -14,7 +14,7 @@ WIDTH , HEIGHT = 1200, 700
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 
 #? images defined 
-background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'castle.png')), (WIDTH, HEIGHT))
+background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'ma6jAJ.jpg')), (WIDTH, HEIGHT))
 blue_fighter = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'Blue1.png')), (100, 200))
 red_fighter = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'Red1.png')), (100,200))
 
