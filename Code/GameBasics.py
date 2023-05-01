@@ -15,7 +15,6 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 VELOCITY = 10
 FWIDTH, FHEIGHT = 150, 300 
 
-red_border= red.x
 
 #? images defined 
 #!background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'cat.test.jpg')), (WIDTH, HEIGHT))
@@ -48,12 +47,12 @@ def main():
                 run = False
 
         keys_pressed = pygame.key.get_pressed()
-        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY!= MIDDLE+100:
+        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY > red.x+100:
             blue.x -= VELOCITY 
             #todo: add animations to a list and cycle through them in a while loop 
         if keys_pressed[pygame.K_RIGHT] and blue.x - VELOCITY!= 1050:
             blue.x += VELOCITY
-        if keys_pressed[pygame.K_d] and red.x + VELOCITY != MIDDLE - 100:
+        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 100:
             red.x += VELOCITY 
         if keys_pressed[pygame.K_a] and red.x !=0:
             red.x -= VELOCITY 
