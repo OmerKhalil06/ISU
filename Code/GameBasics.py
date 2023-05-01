@@ -15,6 +15,7 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 VELOCITY = 10
 FWIDTH, FHEIGHT = 150, 300 
 
+red_border= red.x
 
 #? images defined 
 #!background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'cat.test.jpg')), (WIDTH, HEIGHT))
