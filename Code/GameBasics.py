@@ -20,20 +20,20 @@ background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'ca
 blue_fighter = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'Blue1.png')), (150, 300))
 blue_stand = pygame.transform.scale(pygame.image.load(
-    os.path.join('Images', 'Blue3.png')), (150, 300))
+    os.path.join('Images', 'Blue2.png')), (150, 300))
 blue_punch = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'Blue3.png')), (150, 300))
 
 red_fighter = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'Red1.png')), (150,300)), True, False)
 red_stand = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
-    os.path.join('Images', 'Red3.png')), (150,300)), True, False)
+    os.path.join('Images', 'Red2.png')), (150,300)), True, False)
 red_back = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'Red4.png')), (180,300)), True, False)
 
 def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar): #? draw window to create images 
     blue_anim = [blue_fighter, blue_stand]
-    red_anim = [red_fighter, red_stand, red_back, red_stand]
+    red_anim = [red_fighter, red_back]
     WINDOW.blit(background, (0, 0)) #? background is drawn on window  
     #! health bars 
     pygame.draw.rect(WINDOW, (0,0,0), pygame.Rect(0, 0, 1200, 100)) #? black healthbar background    
@@ -90,7 +90,7 @@ def main():
             if current_time - last_update >= red_animation_cooldown:
                 red_frame +=1 
                 last_update = current_time
-                if red_frame >= 4:
+                if red_frame >= 2:
                     red_frame = 0 
 
         if keys_pressed[pygame.K_a] and red.x !=0:
@@ -98,7 +98,7 @@ def main():
             if current_time - last_update >= red_animation_cooldown:
                 red_frame +=1 
                 last_update = current_time
-                if red_frame >= 4:
+                if red_frame >= 2:
                     red_frame = 0
 
         draw_window(blue, red, blue_frame, red_frame, blue_hp, red_hp, blue_healthbar)
