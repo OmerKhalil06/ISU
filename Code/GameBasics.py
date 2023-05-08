@@ -84,7 +84,7 @@ def main():
 
         keys_pressed = pygame.key.get_pressed()
 
-        if keys_pressed[pygame.K_l]: #todo ass a feature that adds CD to if pressed early and stun if hit 
+        if keys_pressed[pygame.K_l]: #todo add a feature that adds CD to if pressed early and stun if hit 
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
             blue_able = False 
