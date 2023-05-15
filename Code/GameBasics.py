@@ -115,12 +115,12 @@ def main():
             red_cd = red_cd2
             red_frame = 0 
 
-        if keys_pressed[pygame.K_l] and blue_able == True: #todo add a feature that adds CD to if pressed early and stun if hit 
+        if keys_pressed[pygame.K_l] and blue_able == False: #todo add a feature that adds CD to if pressed early and stun if hit 
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
             blue_able = False 
 
-        if keys_pressed[pygame.K_e] and red_able == True:
+        if keys_pressed[pygame.K_e] and red_able != False:
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2 
             red_able = False 
@@ -158,7 +158,7 @@ def main():
                   red_frame = 0    
 
         if event.type == RED_HIT:
-            red_hp -= 10
+            red_hp -= 1
         if event.type == BLUE_HIT:
             blue_hp -= 10
         handle_hits(blue, red, blue_able, red_able)
