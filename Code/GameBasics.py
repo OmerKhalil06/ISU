@@ -23,12 +23,12 @@ blue_fighter = pygame.transform.scale(pygame.image.load(
 blue_stand = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'Blue2.png')), (150, 300))
 blue_punch = pygame.transform.scale(pygame.image.load(
-    os.path.join('Images', 'Blue3.png')), (210, 300))
+    os.path.join('Images', 'Blue3.png')), (205, 300))
 
 red_fighter = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'Red1.png')), (150,300)), True, False)
 red_punch = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
-    os.path.join('Images', 'Red2.png')), (210,300)), True, False)
+    os.path.join('Images', 'Red2.png')), (205,300)), True, False)
 red_back = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'Red5.png')), (170,300)), True, False)
 #! function for all drawings 
@@ -39,11 +39,11 @@ def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar
     #HP bars 
     pygame.draw.rect(WINDOW, (0,0,0), pygame.Rect(0, 0, 1200, 100)) #? black healthbar background 
 
-    pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(0,0,500, 100))  #! red rectangle for red HP 
-    pygame.draw.rect(WINDOW, (0,150,0), pygame.Rect(0,0,red_hp*5, 100))  #! green rectangle for red HP
+    pygame.draw.rect(WINDOW, (0,255,0), pygame.Rect(0,0,500, 100))  #! red rectangle for red HP 
+    pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(0,0,(100-red_hp)*5, 100))  #! green rectangle for red HP
 
     pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(700, 0 ,700, 100))  #? red rectangle for blue 
-    pygame.draw.rect(WINDOW, (0,150,0), pygame.Rect(700 + blue_healthbar, 0, blue_hp*5, 100))   #? green rectangke for blue
+    pygame.draw.rect(WINDOW, (0,255,0), pygame.Rect(700 + blue_healthbar, 0, blue_hp*5, 100))   #? green rectangke for blue
 
     pygame.draw.rect(WINDOW, (110,0,0), pygame.Rect(0, 600, 1200, 100)) #! floor 
 
@@ -81,16 +81,12 @@ def main():
     blue_cd = pygame.time.get_ticks()
     red_cd = pygame.time.get_ticks()
 
-    blue_lasthit = pygame.time.get_ticks()
-    red_lasthit = pygame.time.get_ticks()
+
 
     while run:
         #! updating animations 
         blue_cd2 = pygame.time.get_ticks()
         red_cd2 = pygame.time.get_ticks()
-
-        blue_lasthit2 = pygame.time.get_ticks()
-        red_lasthit2 = pygame.time.get_ticks()
 
         blue_current_time = pygame.time.get_ticks()
         red_current_time = pygame.time.get_ticks()
@@ -160,17 +156,19 @@ def main():
             attack2 = pygame.draw.rect(WINDOW, (0,0,225), pygame.Rect(blue.x - 50, blue.y, 20, 300))
             if attack2.colliderect(red):
                 red_hp -= 10
-                red.x-=15
+                red.x-=30
                 red_cd2 = 0
-                blue_able == True
+                red_able == False
+                attack2.y+=500
 
         if red_able == False:
             attack1 = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x+200, red.y, 20, 300))
             if  attack1.colliderect(blue):
                 blue_hp -=10
-                blue.x+=15
+                blue.x+=130
                 blue_cd2 = 0
-                red_able == True
+                blue_able == False
+                attack1.y += 500
 
     
 
