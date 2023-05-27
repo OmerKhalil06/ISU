@@ -8,7 +8,7 @@ import os
 pygame.display.set_caption('Py-ting Game')
 
 #! global varibles 
-FPS = 30
+FPS = 60
 WIDTH , HEIGHT = 1200, 700
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 VELOCITY = 10
@@ -49,7 +49,7 @@ def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar
 
     pygame.draw.rect(WINDOW, (110,0,0), pygame.Rect(0, 600, 1200, 100)) #! floor 
 
-    WINDOW.blit((blue_anim[blue_frame]),(blue.x, blue.y))
+    WINDOW.blit(blue_anim[blue_frame],(blue.x, blue.y))
     WINDOW.blit((red_anim[red_frame]), (red.x, red.y)) #? blit = method to place on screen 
 
     pygame.display.update()
@@ -64,7 +64,8 @@ def handle_hits(blue, red, blue_able, red_able):
         attack1 = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x+200, red.y, 50, 300))
         if attack1.colliderect(blue):
             pygame.event.post(pygame.event.Event(BLUE_HIT))
-            
+    
+        
 #! Main function    
 def main():
     #todo: add damage and attacks 
@@ -88,16 +89,11 @@ def main():
     red_able = True 
     blue_cd = pygame.time.get_ticks()
     red_cd = pygame.time.get_ticks()
-    blue_last_attack = pygame.time.get_ticks()
-    red_last_attack = pygame.time.get_ticks()
-
 
     while run:
         #! updating animations 
         blue_cd2 = pygame.time.get_ticks()
         red_cd2 = pygame.time.get_ticks()
-        blue_last_attack2 = pygame.time.get_ticks()
-        red_last_attack2 = pygame.time.get_ticks()
 
         current_time = pygame.time.get_ticks()
 
@@ -109,27 +105,25 @@ def main():
         keys_pressed = pygame.key.get_pressed()
 
         # cooldowns 
-        if blue_cd2 - blue_cd >= 100:
+        if blue_cd2 - blue_cd >= 1000:
             blue_able = True 
             blue_cd = blue_cd2 
             blue_frame = 0 
         
-        if red_cd2 - red_cd >=100:
+        if red_cd2 - red_cd >=500:
             red_able = True 
             red_cd = red_cd2
             red_frame = 0 
 
-        if keys_pressed[pygame.K_l] and blue_able == True and blue_last_attack2 - blue_last_attack >= 1000: #todo add a feature that adds CD to if pressed early and stun if hit 
+        if keys_pressed[pygame.K_l] and blue_able == True: #todo add a feature that adds CD to if pressed early and stun if hit 
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
             blue_able = False 
-            blue_last_attack = blue_last_attack2
 
-        if keys_pressed[pygame.K_e] and red_able == True and red_last_attack2 - red_last_attack>=1000:
+        if keys_pressed[pygame.K_e] and red_able == True:
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2 
             red_able = False 
-            red_last_attack = red_last_attack2
 
         if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY > red.x+150 and blue_able == True:
             blue.x -= VELOCITY
@@ -165,11 +159,8 @@ def main():
 
         if event.type == RED_HIT:
             red_hp -= 10
-     
         if event.type == BLUE_HIT:
             blue_hp -= 10
-        
-    
         handle_hits(blue, red, blue_able, red_able)
         draw_window(blue, red, blue_frame, red_frame, blue_hp, red_hp, blue_healthbar, blue_able, red_able)
         
