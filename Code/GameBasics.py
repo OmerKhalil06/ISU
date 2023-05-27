@@ -14,8 +14,6 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 VELOCITY = 10
 FWIDTH, FHEIGHT = 150, 300 
 
-BLUE_HIT = pygame.USEREVENT + 1
-RED_HIT = pygame.USEREVENT + 2
 
 #! images defined 
 background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'castle.png')), (WIDTH, HEIGHT))
@@ -54,16 +52,8 @@ def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar
 
     pygame.display.update()
 
-def handle_hits(blue, red, blue_able, red_able):
-    if blue_able == False:
-        attack2 = pygame.draw.rect(WINDOW, (0,0,225), pygame.Rect(blue.x - 50, blue.y, 50, 300))
-        if attack2.colliderect(red):
-            pygame.event.post(pygame.event.Event(RED_HIT))
-
-    if red_able == False:
-        attack1 = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x+200, red.y, 50, 300))
-        if attack1.colliderect(blue):
-            pygame.event.post(pygame.event.Event(BLUE_HIT))
+#def handle_hits(blue, red, blue_able, red_able):
+    
     
         
 #! Main function    
@@ -76,7 +66,8 @@ def main():
     blue = pygame.Rect(1050,300, FWIDTH, FHEIGHT)
     red = pygame.Rect(0,300, FWIDTH, FHEIGHT)
     #! animations 
-    last_update = pygame.time.get_ticks()
+    blue_last_update = pygame.time.get_ticks()
+    red_last_update = pygame.time.get_ticks()
     blue_animation_cooldown, red_animation_cooldown= 150, 150
     blue_frame = 0 
     red_frame = 0
@@ -90,17 +81,25 @@ def main():
     blue_cd = pygame.time.get_ticks()
     red_cd = pygame.time.get_ticks()
 
+    blue_lasthit = pygame.time.get_ticks()
+    red_lasthit = pygame.time.get_ticks()
+
     while run:
         #! updating animations 
         blue_cd2 = pygame.time.get_ticks()
         red_cd2 = pygame.time.get_ticks()
 
-        current_time = pygame.time.get_ticks()
+        blue_lasthit2 = pygame.time.get_ticks()
+        red_lasthit2 = pygame.time.get_ticks()
 
+        blue_current_time = pygame.time.get_ticks()
+        red_current_time = pygame.time.get_ticks()
         frame_rate.tick(FPS) #? control speed of while loop / second 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+
 
         keys_pressed = pygame.key.get_pressed()
 
@@ -125,46 +124,59 @@ def main():
             red_frame = 2 
             red_able = False 
 
-        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY > red.x+150 and blue_able == True:
+        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY > red.x+180 and blue_able == True:
             blue.x -= VELOCITY
-            if current_time - last_update >= blue_animation_cooldown:
+            if blue_current_time - blue_last_update >= blue_animation_cooldown:
                 blue_frame +=1 
-                last_update = current_time
+                blue_last_update = blue_current_time
                 if blue_frame >= 2:
                     blue_frame = 0 
 
         if keys_pressed[pygame.K_RIGHT] and blue.x - VELOCITY!= 1050 and blue_able == True:
             blue.x += VELOCITY
-            if current_time - last_update >= blue_animation_cooldown:
+            if blue_current_time - blue_last_update >= blue_animation_cooldown:
                 blue_frame +=1 
-                last_update = current_time
+                blue_last_update = blue_current_time
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 150 and red_able == True:
+        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 180 and red_able == True:
             red.x += VELOCITY 
-            if current_time - last_update >= red_animation_cooldown:
+            if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
-                last_update = current_time
-                if red_frame >= 2:
+                red_last_update = red_current_time
+                if red_frame >= 2: 
                     red_frame = 0 
 
         if keys_pressed[pygame.K_a] and red.x !=0 and red_able == True:
             red.x -= VELOCITY 
-            if current_time - last_update >= red_animation_cooldown:
+            if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
-                last_update = current_time
+                red_last_update = red_current_time
                 if red_frame >= 2:
-                  red_frame = 0    
+                  red_frame = 0  
 
-        if event.type == RED_HIT:
-            red_hp -= 10
-        if event.type == BLUE_HIT:
-            blue_hp -= 10
-        handle_hits(blue, red, blue_able, red_able)
+        if blue_able == False:
+            attack2 = pygame.draw.rect(WINDOW, (0,0,225), pygame.Rect(blue.x - 50, blue.y, 20, 300))
+            if attack2.colliderect(red):
+                red_hp -= 10
+                red.x-=15
+                red_cd2 = 0
+                blue_able == True
+
+        if red_able == False:
+            attack1 = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x+200, red.y, 20, 300))
+            if  attack1.colliderect(blue):
+                blue_hp -=10
+                blue.x+=15
+                blue_cd2 = 0
+                red_able == True
+
+    
+
         draw_window(blue, red, blue_frame, red_frame, blue_hp, red_hp, blue_healthbar, blue_able, red_able)
-        
-        
+
+
     pygame.quit() #? if loop breaks then exit the pygame
 if __name__== "__main__":
     main()
