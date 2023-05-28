@@ -187,7 +187,7 @@ def main():
                 blue_able == False 
                 red_attack.y += 500
             
-        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY > red.x+ 90 and blue_able == True and blue.x+VELOCITY>=220:
+        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY >= red.x + 115 and blue_able == True:
             blue.x -= VELOCITY
             if blue_current_time - blue_last_update >= blue_animation_cooldown:
                 blue_frame +=1 
