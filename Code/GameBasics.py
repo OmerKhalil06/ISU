@@ -105,12 +105,21 @@ def main():
     blue_cd = pygame.time.get_ticks()
     red_cd = pygame.time.get_ticks()
 
+    red_stun = True 
+    blue_stun = True
+
+    red_stun_cd = pygame.time.get_ticks() 
+    blue_stun_cd = pygame.time.get_ticks()
+
 
 
     while run:
         #! updating animations 
         blue_cd2 = pygame.time.get_ticks()
         red_cd2 = pygame.time.get_ticks()
+
+        red_stun_cd2 = pygame.time.get_ticks()
+        blue_stun_cd2 = pygame.time.get_ticks()
 
         blue_current_time = pygame.time.get_ticks()
         red_current_time = pygame.time.get_ticks()
@@ -124,6 +133,18 @@ def main():
         keys_pressed = pygame.key.get_pressed()
 
         # cooldowns 
+
+        if red_stun == False:
+            if red_stun_cd2 - red_stun_cd >= 500:
+                red_stun = True
+                red_stun_cd = red_stun_cd2
+                
+        
+        if blue_stun == False:
+            if blue_stun_cd2 - blue_stun_cd >= 500:
+                blue_stun = True
+                blue_stun_cd = blue_stun_cd2
+
         if blue_cd2 - blue_cd >= 400:
             blue_able = True 
             blue_cd = blue_cd2 
@@ -142,24 +163,26 @@ def main():
     
         if keys_pressed[pygame.K_l] and blue_able == True: #todo add a feature that adds CD to if pressed early and stun if hit 
             blue_able = False
+            blue_stun = False
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
-            blue_attack = pygame.draw.rect(WINDOW, (0,0,225), pygame.Rect(blue.x - 20, blue.y, 20, 300))
+            blue_attack = pygame.draw.rect(WINDOW, (0,0,225), pygame.Rect(blue.x - 20, blue.y, 10, 300))
             if blue_attack.colliderect(red):
                 red_hp -= 10
                 red_cd2 = 0
                 red_able == False
                 blue_attack.y+=500
-                red.x-=30
+                red.x-=60
 
-        if keys_pressed[pygame.K_e] and red_able == True:
-            red_able = False 
+        if keys_pressed[pygame.K_e] and red_able == True and red_stun == True:
+            red_able = False
+            red_stun = False 
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2
-            red_attack = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x + 220, red.y, 20, 300))
+            red_attack = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x + 220, red.y, 10, 300))
             if  red_attack.colliderect(blue):
                 blue_hp -=10
-                blue.x+= 30
+                blue.x+= 60
                 blue_cd2 = 0
                 blue_able == False 
                 red_attack.y += 500
@@ -180,7 +203,7 @@ def main():
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 90 and red_able == True and red.x-VELOCITY<=810:
+        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 90 and red_able == True and red.x-VELOCITY<=810 and red_stun == True:
             red.x += VELOCITY 
             if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
@@ -188,7 +211,7 @@ def main():
                 if red_frame >= 2: 
                     red_frame = 0 
 
-        if keys_pressed[pygame.K_a] and red.x !=0 and red_able == True:
+        if keys_pressed[pygame.K_a] and red.x !=0 and red_able == True and red_stun == True:
             red.x -= VELOCITY 
             if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
