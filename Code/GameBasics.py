@@ -135,13 +135,13 @@ def main():
         # cooldowns 
 
         if red_stun == False:
-            if red_stun_cd2 - red_stun_cd >= 500:
+            if red_stun_cd2 - red_stun_cd >= 1000:
                 red_stun = True
                 red_stun_cd = red_stun_cd2
                 
         
         if blue_stun == False:
-            if blue_stun_cd2 - blue_stun_cd >= 500:
+            if blue_stun_cd2 - blue_stun_cd >= 1000:
                 blue_stun = True
                 blue_stun_cd = blue_stun_cd2
 
