@@ -37,10 +37,12 @@ def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar
     red_anim = [red_fighter, red_back, red_punch]
     WINDOW.blit(background, (0, 100)) #? background is drawn on window  
     #HP bars 
-    pygame.draw.rect(WINDOW, (0,0,0), pygame.Rect(0, 0, 1200, 100)) #? black healthbar background 
-
     pygame.draw.rect(WINDOW, (0,255,0), pygame.Rect(0,0,500, 100))  #! red rectangle for red HP 
     pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(0,0,(100-red_hp)*5, 100))  #! green rectangle for red HP
+    
+    pygame.draw.rect(WINDOW, (0,0,0), pygame.Rect(500, 0, 200, 100)) #? black healthbar background 
+
+
 
     pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(700, 0 ,700, 100))  #? red rectangle for blue 
     pygame.draw.rect(WINDOW, (0,255,0), pygame.Rect(700 + blue_healthbar, 0, blue_hp*5, 100))   #? green rectangke for blue
@@ -100,27 +102,47 @@ def main():
         keys_pressed = pygame.key.get_pressed()
 
         # cooldowns 
-        if blue_cd2 - blue_cd >= 1000:
+        if blue_cd2 - blue_cd >= 300:
             blue_able = True 
             blue_cd = blue_cd2 
             blue_frame = 0 
         
-        if red_cd2 - red_cd >=500:
+        if red_cd2 - red_cd >=300:
             red_able = True 
             red_cd = red_cd2
             red_frame = 0 
 
+        if blue.x >= 1200:
+            blue.x =1050
+
+        if red.x <= 0:
+            red.x =0 
+
         if keys_pressed[pygame.K_l] and blue_able == True: #todo add a feature that adds CD to if pressed early and stun if hit 
+            blue_able = False
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
-            blue_able = False 
+            blue_attack = pygame.draw.rect(WINDOW, (0,0,225), pygame.Rect(blue.x - 50, blue.y, 20, 300))
+            if blue_attack.colliderect(red):
+                red_hp -= 10
+                red_cd2 = 0
+                red_able == False
+                blue_attack.y+=500
+                red.x-=30
 
         if keys_pressed[pygame.K_e] and red_able == True:
-            red_cd2 = pygame.time.get_ticks()
-            red_frame = 2 
             red_able = False 
-
-        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY > red.x+180 and blue_able == True:
+            red_cd2 = pygame.time.get_ticks()
+            red_frame = 2
+            red_attack = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x+200, red.y, 20, 300))
+            if  red_attack.colliderect(blue):
+                blue_hp -=10
+                blue.x+= 30
+                blue_cd2 = 0
+                blue_able == False 
+                red_attack.y += 500
+            
+        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY > red.x+180 and blue_able == True and blue.x+VELOCITY>=220:
             blue.x -= VELOCITY
             if blue_current_time - blue_last_update >= blue_animation_cooldown:
                 blue_frame +=1 
@@ -136,7 +158,7 @@ def main():
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 180 and red_able == True:
+        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 180 and red_able == True and red.x-VELOCITY<=810:
             red.x += VELOCITY 
             if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
@@ -151,26 +173,6 @@ def main():
                 red_last_update = red_current_time
                 if red_frame >= 2:
                   red_frame = 0  
-
-        if blue_able == False:
-            attack2 = pygame.draw.rect(WINDOW, (0,0,225), pygame.Rect(blue.x - 50, blue.y, 20, 300))
-            if attack2.colliderect(red):
-                red_hp -= 10
-                red.x-=30
-                red_cd2 = 0
-                red_able == False
-                attack2.y+=500
-
-        if red_able == False:
-            attack1 = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x+200, red.y, 20, 300))
-            if  attack1.colliderect(blue):
-                blue_hp -=10
-                blue.x+=130
-                blue_cd2 = 0
-                blue_able == False
-                attack1.y += 500
-
-    
 
         draw_window(blue, red, blue_frame, red_frame, blue_hp, red_hp, blue_healthbar, blue_able, red_able)
 
