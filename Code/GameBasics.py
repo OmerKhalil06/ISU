@@ -16,7 +16,7 @@ FWIDTH, FHEIGHT = 150, 300
 
 
 #! images defined 
-background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'castle.png')), (WIDTH, HEIGHT))
+background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'dojo.jpg')), (WIDTH, HEIGHT))
 
 floor = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'floor.png')), (100,100))
@@ -29,6 +29,8 @@ blue_stand = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue2.png')), (220, 300))
 blue_punch = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue3.png')), (220, 300))
+blue_punch2 = pygame.transform.scale(pygame.image.load(
+    os.path.join('Images', 'blue4.png')), (220, 300))
 
 red_fighter = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red1.png')), (220,300)), True, False)
@@ -36,25 +38,14 @@ red_back = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red2.png')), (220,300)), True, False)
 red_punch = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red3.png')), (220,300)), True, False)
+red_punch2 = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
+    os.path.join('Images', 'red4.png')), (220,300)), True, False)
 #! function for all drawings 
 def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar, blue_able, red_able): #? draw window to create images 
-    blue_anim = [blue_fighter, blue_stand, blue_punch]
-    red_anim = [red_fighter, red_back, red_punch]
-    WINDOW.blit(background, (0, 100)) #? background is drawn on window  
+    blue_anim = [blue_fighter, blue_stand, blue_punch, blue_punch2]
+    red_anim = [red_fighter, red_back, red_punch, red_punch2]
 
-
-    WINDOW.blit(floor, (0, 600))
-    WINDOW.blit(floor, (100, 600))
-    WINDOW.blit(floor, (200, 600))
-    WINDOW.blit(floor, (300, 600))
-    WINDOW.blit(floor, (400, 600))
-    WINDOW.blit(floor, (500, 600))
-    WINDOW.blit(floor, (600, 600))
-    WINDOW.blit(floor, (700, 600))
-    WINDOW.blit(floor, (800, 600))
-    WINDOW.blit(floor, (900, 600))
-    WINDOW.blit(floor, (1000, 600))
-    WINDOW.blit(floor, (1100, 600))
+    WINDOW.blit(background, (0, 0)) #? background is drawn on window  
     
     #HP bars 
     pygame.draw.rect(WINDOW, (0,255,0), pygame.Rect(0,0,500, 100))  #! red rectangle for red HP 
@@ -73,7 +64,6 @@ def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar
     WINDOW.blit(blue_anim[blue_frame],(blue.x, blue.y))
     WINDOW.blit((red_anim[red_frame]), (red.x, red.y)) #? blit = method to place on screen 
     
-    WINDOW.blit(floor, (1100, 600))
     pygame.display.update()
 
 #def handle_hits(blue, red, blue_able, red_able):
