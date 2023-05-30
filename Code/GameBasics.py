@@ -29,7 +29,7 @@ blue_stand = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue2.png')), (220, 300))
 blue_punch = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue3.png')), (220, 300))
-blue_punch2 = pygame.transform.scale(pygame.image.load(
+blue_punch = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue4.png')), (220, 300))
 
 red_fighter = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
@@ -40,11 +40,11 @@ red_punch = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red3.png')), (220,300)), True, False)
 red_punch2 = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red4.png')), (220,300)), True, False)
+
 #! function for all drawings 
 def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar, blue_able, red_able): #? draw window to create images 
-    blue_anim = [blue_fighter, blue_stand, blue_punch, blue_punch2]
-    red_anim = [red_fighter, red_back, red_punch, red_punch2]
-
+    blue_anim = [blue_fighter, blue_stand, blue_punch]
+    red_anim = [red_fighter, red_back, red_punch]
     WINDOW.blit(background, (0, 0)) #? background is drawn on window  
     
     #HP bars 
@@ -151,7 +151,7 @@ def main():
         if red.x <= 0:
             red.x =0 
     
-        if keys_pressed[pygame.K_l] and blue_able == True: #todo add a feature that adds CD to if pressed early and stun if hit 
+        if keys_pressed[pygame.K_l] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
             blue_able = False
             blue_stun = False
             blue_cd2 = pygame.time.get_ticks()
