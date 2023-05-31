@@ -42,7 +42,7 @@ red_punch2 = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red4.png')), (220,300)), True, False)
 
 #! function for all drawings 
-def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar, blue_able, red_able): #? draw window to create images 
+def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar): #? draw window to create images 
     blue_anim = [blue_fighter, blue_stand, blue_punch]
     red_anim = [red_fighter, red_back, red_punch]
     WINDOW.blit(background, (0, 0)) #? background is drawn on window  
@@ -150,7 +150,6 @@ def main():
 
         if red.x <= 0:
             red.x =0 
-    
         if keys_pressed[pygame.K_l] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
             blue_able = False
             blue_stun = False
@@ -164,7 +163,7 @@ def main():
                 blue_attack.y+=500
                 red.x-=60
 
-        if keys_pressed[pygame.K_e] and red_able == True and red_stun == True:
+        if keys_pressed[pygame.K_e]and red_stun == True:
             red_able = False
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
@@ -193,7 +192,7 @@ def main():
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 90 and red_able == True and red.x-VELOCITY<=810 and red_stun == True:
+        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 90 and red_able == True and red.x-VELOCITY<= 1080 and red_stun == True:
             red.x += VELOCITY 
             if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
@@ -209,7 +208,7 @@ def main():
                 if red_frame >= 2:
                   red_frame = 0  
 
-        draw_window(blue, red, blue_frame, red_frame, blue_hp, red_hp, blue_healthbar, blue_able, red_able)
+        draw_window(blue, red, blue_frame, red_frame, blue_hp, red_hp, blue_healthbar)
 
 
     pygame.quit() #? if loop breaks then exit the pygame
