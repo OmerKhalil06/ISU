@@ -150,7 +150,7 @@ def main():
 
         if red.x <= 0:
             red.x =0 
-        if keys_pressed[pygame.K_l] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
+        if keys_pressed[pygame.K_KP_0] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
             blue_able = False
             blue_stun = False
             blue_cd2 = pygame.time.get_ticks()
