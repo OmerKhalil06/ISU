@@ -79,7 +79,7 @@ def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar
     
 def draw_winner(text, text_colour):   
     draw_text = WINNER_FONT.render(text, 1, text_colour ) 
-    pygame.draw.rect(WINDOW, (255, 255,255),  pygame.Rect(400, 300 , 405, 100))
+    pygame.draw.rect(WINDOW, (200, 200,250),  pygame.Rect(400, 300 , 405, 100))
     WINDOW.blit(draw_text, (WIDTH/2 - draw_text.get_width()/2, HEIGHT/2 - draw_text.get_height()/2)) 
     pygame.display.update()
     pygame.time.delay(1000)
@@ -110,6 +110,7 @@ def main():
 
     red_stun = True 
     blue_stun = True
+    
 
     red_stun_cd = pygame.time.get_ticks() 
     blue_stun_cd = pygame.time.get_ticks()
@@ -176,12 +177,12 @@ def main():
 
 
         if keys_pressed[pygame.K_e]and red_stun == True:
-            punch_sound.play()
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2
             red_attack = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x + 220, red.y, 10, 300))
             if  red_attack.colliderect(blue):
+                punch_sound.play()
                 blue_hp -=10
                 blue.x+= 60
                 blue_cd2 = 0
