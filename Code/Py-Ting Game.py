@@ -171,7 +171,7 @@ def main():
                 punch_sound.play()
                 red_hp -= 10
                 red_cd2 = 0
-                red_able == False
+                red_stun == False
                 blue_attack.y+=500
                 red.x-=60
 
@@ -189,7 +189,7 @@ def main():
                 blue_stun == False 
                 red_attack.y += 500
             
-        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY >= red.x + 115 and blue_able == True:
+        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY >= red.x + 115 and blue_stun == True:
             blue.x -= VELOCITY
             if blue_current_time - blue_last_update >= blue_animation_cooldown:
                 blue_frame +=1 
@@ -197,7 +197,7 @@ def main():
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_RIGHT] and blue.x - VELOCITY!= 980 and blue_able == True:
+        if keys_pressed[pygame.K_RIGHT] and blue.x - VELOCITY!= 980 and blue_stun == True:
             blue.x += VELOCITY
             if blue_current_time - blue_last_update >= blue_animation_cooldown:
                 blue_frame +=1 
@@ -205,7 +205,7 @@ def main():
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 90 and red_able == True and red.x-VELOCITY<= 1080 and red_stun == True:
+        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 90 and red.x-VELOCITY<= 1080 and red_stun == True:
             red.x += VELOCITY 
             if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
@@ -213,7 +213,7 @@ def main():
                 if red_frame >= 2: 
                     red_frame = 0 
 
-        if keys_pressed[pygame.K_a] and red.x !=0 and red_able == True and red_stun == True:
+        if keys_pressed[pygame.K_a] and red.x !=0 and red_stun == True:
             red.x -= VELOCITY 
             if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
