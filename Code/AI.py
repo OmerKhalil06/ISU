@@ -112,6 +112,7 @@ def main():
     blue_stun = True
 
     blue_ko = False 
+    red_ko = False 
     
 
     red_stun_cd = pygame.time.get_ticks() 
@@ -164,7 +165,7 @@ def main():
 
         if red.x <= 0:
             red.x =0 
-        if keys_pressed[pygame.K_l] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
+        if keys_pressed[pygame.K_l] and blue_stun == True and red_ko == False: #todo add a feature that adds CD to if pressed early and stun if hit 
             blue_stun = False
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
@@ -178,7 +179,7 @@ def main():
                 red.x-=60
 
 
-        if blue.x <= red.x + 220 and red_stun == True:
+        if blue.x <= red.x + 220 and red_stun == True and blue_ko == False:
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2
@@ -191,7 +192,7 @@ def main():
                 blue_stun == False 
                 red_attack.y += 500
             
-        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY >= red.x + 115 and blue_stun == True and blue_ko == False:
+        if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY >= red.x + 115 and blue_stun == True and red_ko == False:
             blue.x -= VELOCITY
             if blue_current_time - blue_last_update >= blue_animation_cooldown:
                 blue_frame +=1 
@@ -199,7 +200,7 @@ def main():
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_RIGHT] and blue.x - VELOCITY!= 980 and blue_able == True:
+        if keys_pressed[pygame.K_RIGHT] and blue.x - VELOCITY!= 980 and blue_able == True and red_ko == False:
             blue.x += VELOCITY
             if blue_current_time - blue_last_update >= blue_animation_cooldown:
                 blue_frame +=1 
@@ -207,7 +208,8 @@ def main():
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 90 and red_able == True and red.x-VELOCITY<= 1080 and red_stun == True:
+
+        if red.x <= blue.x - 20 and red.x + VELOCITY < blue.x - 90 and red.x-VELOCITY<= 1080 and red_stun == True and blue_ko == False:
             red.x += VELOCITY 
             if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
@@ -215,13 +217,6 @@ def main():
                 if red_frame >= 2: 
                     red_frame = 0 
 
-        if keys_pressed[pygame.K_a] and red.x !=0 and red_able == True and red_stun == True:
-            red.x -= VELOCITY 
-            if red_current_time - red_last_update >= red_animation_cooldown:
-                red_frame +=1 
-                red_last_update = red_current_time
-                if red_frame >= 2:
-                  red_frame = 0  
         
         winner_text =  '' 
 
