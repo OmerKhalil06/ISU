@@ -4,6 +4,8 @@
 
 import pygame #? import the pygame library 
 import os
+pygame.font.init() #initialize fonts 
+pygame.mixer.init() #initialize sounds 
 
 pygame.display.set_caption('Py-ting Game')
 
@@ -13,6 +15,9 @@ WIDTH , HEIGHT = 1200, 700
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 VELOCITY = 10
 FWIDTH, FHEIGHT = 150, 300 
+
+WINNER_FONT = pygame.font.SysFont('VT323', 100)
+
 
 
 #! images defined 
@@ -65,10 +70,14 @@ def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar
     WINDOW.blit((red_anim[red_frame]), (red.x, red.y)) #? blit = method to place on screen 
     
     pygame.display.update()
-
-#def handle_hits(blue, red, blue_able, red_able):
     
-    
+def draw_winner(text, text_colour):   
+    draw_text = WINNER_FONT.render(text, 1, text_colour ) 
+    pygame.draw.rect(WINDOW, (255, 255,255),  pygame.Rect(400, 300 , 405, 100))
+    WINDOW.blit(draw_text, (WIDTH/2 - draw_text.get_width()/2, HEIGHT/2 - draw_text.get_height()/2)) 
+    pygame.display.update()
+    pygame.time.delay(1000)
+    #! call main menu 
         
 #! Main function    
 def main():
@@ -117,9 +126,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-
-
-
+       
         keys_pressed = pygame.key.get_pressed()
 
         # cooldowns 
@@ -150,7 +157,7 @@ def main():
 
         if red.x <= 0:
             red.x =0 
-        if keys_pressed[pygame.K_KP_0] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
+        if keys_pressed[pygame.K_l] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
             blue_able = False
             blue_stun = False
             blue_cd2 = pygame.time.get_ticks()
@@ -207,9 +214,21 @@ def main():
                 red_last_update = red_current_time
                 if red_frame >= 2:
                   red_frame = 0  
+        
+        winner_text =  '' 
+
+        if blue_hp <=0:
+            winner_text = 'RED WINS '
+            text_colour = (150,0,0)
+        
+        if red_hp <= 0:
+            winner_text = 'BLUE WINS'
+            text_colour = (0,0,150)
 
         draw_window(blue, red, blue_frame, red_frame, blue_hp, red_hp, blue_healthbar)
 
+        if winner_text != '':
+            draw_winner(winner_text, text_colour)
 
     pygame.quit() #? if loop breaks then exit the pygame
 if __name__== "__main__":
