@@ -105,8 +105,6 @@ def main():
   
     run = True 
     #! Cooldown 
-    blue_able = True 
-    red_able = True 
     blue_cd = pygame.time.get_ticks()
     red_cd = pygame.time.get_ticks()
 
@@ -164,7 +162,6 @@ def main():
         if red.x <= 0:
             red.x =0 
         if keys_pressed[pygame.K_l] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
-            blue_able = False
             blue_stun = False
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
@@ -180,7 +177,6 @@ def main():
 
         if keys_pressed[pygame.K_e]and red_stun == True:
             punch_sound.play()
-            red_able = False
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2
@@ -189,7 +185,7 @@ def main():
                 blue_hp -=10
                 blue.x+= 60
                 blue_cd2 = 0
-                blue_able == False 
+                blue_stun == False 
                 red_attack.y += 500
             
         if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY >= red.x + 115 and blue_able == True:
