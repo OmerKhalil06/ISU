@@ -1,4 +1,6 @@
 import pygame 
+import os 
+
 #window 
 HEIGHT = 500 
 WIDTH = 800
@@ -8,6 +10,8 @@ pygame.display.set_caption('Button Demo')
 #load images 
 blue_fighter = pygame.image.load('Images/blue1.png').convert_alpha()
 red_fighter = pygame.image.load('Images/red1.png').convert_alpha()
+background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'dojo.jpg')), (WIDTH, HEIGHT))
+
 
 #button class 
 class Button():
@@ -40,8 +44,7 @@ exit_button = Button( 450, 200, red_fighter, False)
 #game loop 
 run = True 
 while run:
-    screen.fill((202,228, 241))
-
+    screen.blit(background, (0, 0))
     if start_button.draw():
         print('start')
         #or run the function 

@@ -23,7 +23,7 @@ blue_stand = pygame.transform.scale(pygame.image.load(
 red_fighter = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'Red1.png')), (150,300)), True, False)
 
-animations = 
+
 
 def draw_window(blue, red): #? draw window to create images 
     WINDOW.blit(background, (0, 0)) #? background is drawn on window 
