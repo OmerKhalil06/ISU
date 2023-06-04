@@ -49,7 +49,7 @@ red_punch2 = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
 
 #* sounds
 
-player_hit = pygame.mixer.Sound(os.path.join('Sounds', 'Punch Sound Effect.mp3'))
+punch_sound = pygame.mixer.Sound(os.path.join('Sounds', 'Punch.mp3'))
 
 
 #! function for all drawings 
@@ -170,14 +170,16 @@ def main():
             blue_frame = 2 
             blue_attack = pygame.draw.rect(WINDOW, (0,0,225), pygame.Rect(blue.x - 20, blue.y, 10, 300))
             if blue_attack.colliderect(red):
-                player_hit.play()
+                punch_sound.play()
                 red_hp -= 10
                 red_cd2 = 0
                 red_able == False
                 blue_attack.y+=500
                 red.x-=60
 
+
         if keys_pressed[pygame.K_e]and red_stun == True:
+            punch_sound.play()
             red_able = False
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
