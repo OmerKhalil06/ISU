@@ -1,7 +1,7 @@
 # Omer Khalil
 # 2023-04-29
 # Main Game File
-
+# todo: add way to exit out of main menu
 import pygame #? import the pygame library 
 import os
 pygame.font.init() #initialize fonts 
@@ -82,7 +82,6 @@ def draw_winner(text, text_colour):
     pygame.draw.rect(WINDOW, (200, 200,250),  pygame.Rect(400, 300 , 405, 100))
     WINDOW.blit(draw_text, (WIDTH/2 - draw_text.get_width()/2, HEIGHT/2 - draw_text.get_height()/2)) 
     pygame.display.update()
-    pygame.time.delay(1000)
     #! call main menu 
         
 #! Main function    
@@ -233,8 +232,15 @@ def main():
 
         draw_window(blue, red, blue_frame, red_frame, blue_hp, red_hp, blue_healthbar)
 
+        if winner_text == '':
+            win_delay = 1
         if winner_text != '':
             draw_winner(winner_text, text_colour)
+            win_delay = pygame.time.get_ticks()
+        
+        if win_delay >= 5000:
+            menu()
+
 
     pygame.quit() #? if loop breaks then exit the pygame
 
@@ -274,24 +280,29 @@ class Button():
         #draw button on screen
         screen.blit(self.image, (self.rect.x, self.rect.y))
         return action  
-start_button = Button(100,200, button1, False)
-exit_button = Button( 450, 200, button2, False)
-#game loop 
-run = True 
-while run:
-    screen.blit(background, (0, 0))
-    if start_button.draw():
-        main()
-        #or run the function 
-    if exit_button.draw():
-        print('exit')
-        run = False 
-    start_button.draw()
-    exit_button.draw()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+
+def menu():
+    start_button = Button(100,200, button1, False)
+    exit_button = Button( 450, 200, button2, False)
+    #game loop 
+    run = True 
+    while run:
+        screen.blit(background, (0, 0))
+        if start_button.draw():
+            main()
+            #or run the function 
+        if exit_button.draw():
+            print('exit')
             run = False 
+        start_button.draw()
+        exit_button.draw()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False 
 
-    pygame.display.update()
+        pygame.display.update()
 
-pygame.quit 
+    pygame.quit 
+
+
+menu()
