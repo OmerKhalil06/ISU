@@ -20,7 +20,7 @@ WINNER_FONT = pygame.font.SysFont('VT323', 100)
 
 
 
-#! images defined 
+#* Images  
 background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'dojo.jpg')), (WIDTH, HEIGHT))
 
 floor = pygame.transform.scale(pygame.image.load(
@@ -45,6 +45,12 @@ red_punch = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red3.png')), (220,300)), True, False)
 red_punch2 = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red4.png')), (220,300)), True, False)
+
+
+#* sounds
+
+player_hit = pygame.mixer.Sound(os.path.join('Sounds', 'Punch Sound Effect.mp3'))
+
 
 #! function for all drawings 
 def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar): #? draw window to create images 
@@ -164,6 +170,7 @@ def main():
             blue_frame = 2 
             blue_attack = pygame.draw.rect(WINDOW, (0,0,225), pygame.Rect(blue.x - 20, blue.y, 10, 300))
             if blue_attack.colliderect(red):
+                player_hit.play()
                 red_hp -= 10
                 red_cd2 = 0
                 red_able == False
