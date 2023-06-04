@@ -249,8 +249,8 @@ def main():
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Button Demo')
 #load images 
-button1 = pygame.image.load('Images/blue1.png').convert_alpha()
-button2 = pygame.image.load('Images/red1.png').convert_alpha()
+button1 = pygame.image.load('Images/Start.png').convert_alpha()
+button2 = pygame.image.load('Images/Multi.png').convert_alpha()
 background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'dojo.jpg')), (WIDTH, HEIGHT))
 
 
