@@ -179,7 +179,7 @@ def main():
                 red.x-=60
 
 
-        if blue.x <= red.x + 220 and red_stun == True and blue_ko == False:
+        if blue.x <= red.x + 210 and red_stun == True and blue_ko == False:
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2
@@ -200,7 +200,7 @@ def main():
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_RIGHT] and blue.x - VELOCITY!= 980 and blue_able == True and red_ko == False:
+        if keys_pressed[pygame.K_RIGHT] and blue.x - VELOCITY!= 980  and red_ko == False:
             blue.x += VELOCITY
             if blue_current_time - blue_last_update >= blue_animation_cooldown:
                 blue_frame +=1 
