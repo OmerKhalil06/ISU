@@ -86,7 +86,7 @@ def draw_winner(text, text_colour):
     #! call main menu 
         
 #! Main function    
-def main():
+def AI():
     #todo: add damage and attacks 
     blue_hp = 100
     red_hp = 100
@@ -179,11 +179,11 @@ def main():
                 red.x-=60
 
 
-        if blue.x <= red.x + 210 and red_stun == True and blue_ko == False:
+        if blue.x <= red.x + 230 and red_stun == True and blue_ko == False:
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2
-            red_attack = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x + 220, red.y, 10, 300))
+            red_attack = pygame.draw.rect(WINDOW, (255,0,0), pygame.Rect(red.x + 170, red.y, 10, 300))
             if  red_attack.colliderect(blue):
                 punch_sound.play()
                 blue_hp -=10
