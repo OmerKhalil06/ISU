@@ -19,11 +19,8 @@ FWIDTH, FHEIGHT = 150, 300
 
 WINNER_FONT = pygame.font.SysFont('VT323', 100)
 
-
-
-
 #* Images  
-background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'dojo.jpg')), (WIDTH, HEIGHT))
+background = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'final_battle.jpg')), (WIDTH, HEIGHT))
 
 floor = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'floor.png')), (100,100))
 logo = pygame.transform.scale(pygame.image.load(
@@ -115,9 +112,6 @@ def main():
 
     red_stun_cd = pygame.time.get_ticks() 
     blue_stun_cd = pygame.time.get_ticks()
-
-
-
 
     while run:
         #! updating animations 
