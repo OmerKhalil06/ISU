@@ -2,7 +2,6 @@
 # 2023-04-29
 # Main Game File
 # todo: add way to exit out of main menu
-import time
 import pygame #? import the pygame library 
 import os
 pygame.font.init() #initialize fonts 
@@ -16,6 +15,7 @@ WIDTH , HEIGHT = 1200, 700
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 VELOCITY = 10
 FWIDTH, FHEIGHT = 150, 300 
+APPLE_VEL = 20
 
 WINNER_FONT = pygame.font.SysFont('VT323', 100)
 
@@ -32,8 +32,10 @@ blue_stand = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue2.png')), (220, 300))
 blue_punch = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue3.png')), (220, 300))
-blue_punch = pygame.transform.scale(pygame.image.load(
+blue_punch2 = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue4.png')), (220, 300))
+blue_kick = pygame.transform.scale(pygame.image.load(
+    os.path.join('Images', 'blue5.png')), (300, 300))
 
 red_fighter = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red1.png')), (220,300)), True, False)
@@ -43,6 +45,8 @@ red_punch = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red3.png')), (220,300)), True, False)
 red_punch2 = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red4.png')), (220,300)), True, False)
+red_kick = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
+    os.path.join('Images', 'red5.png')), (220,300)), True, False)
 
 
 #* sounds
@@ -52,8 +56,8 @@ punch_sound = pygame.mixer.Sound(os.path.join('Sounds', 'Punch.mp3'))
 
 #! function for all drawings 
 def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar): #? draw window to create images 
-    blue_anim = [blue_fighter, blue_stand, blue_punch]
-    red_anim = [red_fighter, red_back, red_punch]
+    blue_anim = [blue_fighter, blue_stand, blue_punch, blue_punch2, blue_kick]
+    red_anim = [red_fighter, red_back, red_punch, red_punch2, red_kick]
     WINDOW.blit(background, (0, 0)) #? background is drawn on window  
     
     #HP bars 
@@ -167,12 +171,27 @@ def main():
             blue_attack = pygame.Rect(blue.x - 20, blue.y, 10, 300)
             if blue_attack.colliderect(red):
                 punch_sound.play()
-                red_hp -= 10
+                red_hp -= 5
                 red_cd2 = 0
                 red_stun == False
                 blue_attack.y+=500
                 red.x-=60
 
+        if keys_pressed[pygame.K_SPACE] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
+            blue_stun = False
+            blue_able = True 
+            blue_cd2 = pygame.time.get_ticks()
+            blue_frame = 4
+            if blue.x - 120 > red.x +90:
+                blue.x -= 10
+            blue_attack = pygame.Rect(blue.x - 100, blue.y, 10, 300)
+            if blue_attack.colliderect(red):
+                punch_sound.play()
+                red_hp -= 2
+                red_cd2 = 0
+                red_stun == False
+                blue_attack.y+=500
+                red.x-=1200
 
         if keys_pressed[pygame.K_e]and red_stun == True:
             red_stun = False 
@@ -181,7 +200,7 @@ def main():
             red_attack = pygame.Rect(red.x + 170, red.y, 10, 300)
             if  red_attack.colliderect(blue):
                 punch_sound.play()
-                blue_hp -=10
+                blue_hp -=5
                 blue.x+= 60
                 blue_cd2 = 0
                 blue_stun == False 
