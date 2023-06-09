@@ -15,7 +15,6 @@ WIDTH , HEIGHT = 1200, 700
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 VELOCITY = 10
 FWIDTH, FHEIGHT = 150, 300 
-APPLE_VEL = 20
 
 WINNER_FONT = pygame.font.SysFont('VT323', 100)
 
@@ -254,7 +253,7 @@ def main():
             draw_winner(winner_text, text_colour)
             pygame.time.delay(3000)
             run = False
-            menu()
+            main_menu()
 
 
     pygame.quit() #? if loop breaks then exit the pygame
@@ -423,7 +422,7 @@ def unbeatable_ai():
             draw_winner(winner_text, text_colour)
             pygame.time.delay(3000)
             run = False
-            menu()
+            main_menu()
 
 
     pygame.quit() #? if loop breaks then exit the pygame
@@ -591,7 +590,7 @@ def med_ai():
             draw_winner(winner_text, text_colour)
             pygame.time.delay(3000)
             run = False
-            menu()
+            main_menu()
         
     pygame.quit() #? if loop breaks then exit the pygame
 
@@ -621,7 +620,6 @@ def easy_ai():
     red_stun = True 
     blue_stun = True
     
-
     red_stun_cd = pygame.time.get_ticks() 
     blue_stun_cd = pygame.time.get_ticks()
 
@@ -759,7 +757,7 @@ def easy_ai():
             draw_winner(winner_text, text_colour)
             pygame.time.delay(3000)
             run = False
-            ()
+            main_menu()
         
     pygame.quit() #? if loop breaks then exit the pygame
 #! main menu 
@@ -772,6 +770,10 @@ single = pygame.image.load('Images/Single.png').convert_alpha()
 exit = pygame.image.load('Images/EXIT.png').convert_alpha()
 start = pygame.image.load('Images/Start.png').convert_alpha()
 setting = pygame.image.load('Images/Settings.png').convert_alpha()
+easy = pygame.image.load('Images/Easy.png').convert_alpha()
+medium = pygame.image.load('Images/Medium.png').convert_alpha()
+impossible = pygame.image.load('Images/Impossible.png').convert_alpha()
+
 #button class 
 class Button():
     def __init__(self, x, y, image, clicked):
@@ -798,8 +800,33 @@ class Button():
         #draw button on screen
         screen.blit(self.image, (self.rect.x, self.rect.y))
         return action  
+def ai_menu():
+    easy_button = Button(900 ,100, easy, False)
+    medium_button = Button(900 , 400, medium, False)
+    impossible_button = Button (900, 200, impossible, False)
+    #game loop 
+    run = True 
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+        screen.blit(background, (0, 0))
+        if easy_button.draw():
+            easy_ai()
+        if medium_button.draw():
+            med_ai()  
+        if impossible_button.draw():
+            unbeatable_ai()  
+            run = False 
+        easy_button.draw()
+        medium_button.draw()        
+        impossible_button.draw()
 
-def ply_menu():
+
+        pygame.display.update()
+
+    pygame.quit 
+def play_menu():
     multiplayer_button = Button(100 ,100, multi, False)
     singleplayer_button = Button(200 , 400, single, False)
     exit_button = Button (400, 200, exit, False)
@@ -813,7 +840,7 @@ def ply_menu():
         if multiplayer_button.draw():
             main()
         if singleplayer_button.draw():
-            unbeatable_ai()  
+            ai_menu()  
         if exit_button.draw():
             run = False 
         multiplayer_button.draw()
@@ -838,11 +865,11 @@ def main_menu():
         screen.blit(background, (0, 0))
         logo = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'logo.png')), (210,300))
         #screen.blit(logo, (495, 0))
-        pygame.draw.rect(WINDOW, (255,218,100), pygame.Rect(300, 0, 600, 600))
+        pygame.draw.rect(WINDOW, (255,218,100), pygame.Rect(300, 200, 600, 400))
 
 
         if start_button.draw():
-            ply_menu()
+            play_menu()
         if setting_button.draw():
             run = False   
         if exit_button.draw():
@@ -853,6 +880,4 @@ def main_menu():
 
 
         pygame.display.update()
-
-
 main_menu()
