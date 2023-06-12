@@ -176,22 +176,6 @@ def main():
                 blue_attack.y+=500
                 red.x-=60
 
-        if keys_pressed[pygame.K_SPACE] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
-            blue_stun = False
-            blue_able = True 
-            blue_cd2 = pygame.time.get_ticks()
-            blue_frame = 4
-            if blue.x - 120 > red.x +90:
-                blue.x -= 10
-            blue_attack = pygame.Rect(blue.x - 100, blue.y, 10, 300)
-            if blue_attack.colliderect(red):
-                punch_sound.play()
-                red_hp -= 50
-                red_cd2 = 0
-                red_stun == False
-                blue_attack.y+=500
-                red.x-=1200 
-
         if keys_pressed[pygame.K_e]and red_stun == True:
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
@@ -321,25 +305,14 @@ def unbeatable_ai():
                 blue_stun = True
                 blue_stun_cd = blue_stun_cd2
 
-        if blue_cd2 - blue_cd >= 400:
-            blue_able = True 
-            blue_cd = blue_cd2 
-            blue_frame = 0
-        
-        if red_cd2 - red_cd >=400:
-            red_able = True 
-            red_cd = red_cd2
-            red_frame = 0
-
         if blue.x >= 980:
             blue.x = 980
 
         if red.x <= 0:
             red.x = 0
 
-        if keys_pressed[pygame.K_l] and blue_stun == True and blue_able == True: #todo add a feature that adds CD to if pressed early and stun if hit 
-            blue_stun = False
-            blue_able = True 
+        if keys_pressed[pygame.K_l] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
+            blue_stun = False 
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
             blue_attack = pygame.Rect(blue.x - 20, blue.y, 10, 300)
@@ -593,7 +566,6 @@ def med_ai():
             main_menu()
         
     pygame.quit() #? if loop breaks then exit the pygame
-
 def easy_ai():
     #todo: add damage and attacks 
     blue_hp = 100
@@ -769,7 +741,6 @@ multi = pygame.image.load('Images/Multi.png').convert_alpha()
 single = pygame.image.load('Images/Single.png').convert_alpha()
 exit = pygame.image.load('Images/EXIT.png').convert_alpha()
 start = pygame.image.load('Images/Start.png').convert_alpha()
-setting = pygame.image.load('Images/Settings.png').convert_alpha()
 easy = pygame.image.load('Images/Easy.png').convert_alpha()
 medium = pygame.image.load('Images/Medium.png').convert_alpha()
 impossible = pygame.image.load('Images/Impossible.png').convert_alpha()
@@ -781,7 +752,6 @@ class Button():
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.clicked = False 
- 
 
     def draw(self):
         action =  False 
@@ -799,11 +769,12 @@ class Button():
                        
         #draw button on screen
         screen.blit(self.image, (self.rect.x, self.rect.y))
-        return action  
+        return action 
+     
 def ai_menu():
-    easy_button = Button(900 ,100, easy, False)
-    medium_button = Button(900 , 400, medium, False)
-    impossible_button = Button (900, 200, impossible, False)
+    easy_button = Button(450 ,100, easy, False)
+    medium_button = Button(450 , 300, medium, False)
+    impossible_button = Button (450, 500, impossible, False)
     #game loop 
     run = True 
     while run:
@@ -822,14 +793,13 @@ def ai_menu():
         medium_button.draw()        
         impossible_button.draw()
 
-
         pygame.display.update()
 
     pygame.quit 
 def play_menu():
-    multiplayer_button = Button(100 ,100, multi, False)
-    singleplayer_button = Button(200 , 400, single, False)
-    exit_button = Button (400, 200, exit, False)
+    multiplayer_button = Button(450 ,200, multi, False)
+    singleplayer_button = Button(450 , 400, single, False)
+    exit_button = Button (450, 600, exit, False)
     #game loop 
     run = True 
     while run:
@@ -850,12 +820,11 @@ def play_menu():
 
         pygame.display.update()
 
-    pygame.quit 
+    pygame.quit
 
 def main_menu(): 
-    start_button = Button(600 ,400, start, False)
-    setting_button = Button(200 , 400, setting, False)
-    exit_button = Button (400, 200, exit, False)
+    start_button = Button(450 , 300, start, False)
+    exit_button = Button (450, 500, exit, False)
     #game loop 
     run = True 
     while run:
@@ -863,21 +832,14 @@ def main_menu():
             if event.type == pygame.QUIT:
                 run = False
         screen.blit(background, (0, 0))
-        logo = pygame.transform.scale(pygame.image.load(os.path.join('Images', 'logo.png')), (210,300))
-        #screen.blit(logo, (495, 0))
-        pygame.draw.rect(WINDOW, (255,218,100), pygame.Rect(300, 200, 600, 400))
-
-
         if start_button.draw():
             play_menu()
-        if setting_button.draw():
-            run = False   
+        
         if exit_button.draw():
             run = False 
-        setting_button.draw()
         start_button.draw()        
         exit_button.draw()
 
-
         pygame.display.update()
+    pygame.quit
 main_menu()
