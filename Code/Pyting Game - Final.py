@@ -272,9 +272,6 @@ def unbeatable_ai():
     red_stun_cd = pygame.time.get_ticks() 
     blue_stun_cd = pygame.time.get_ticks()
 
-
-
-
     while run:
         #! updating animations 
         blue_cd2 = pygame.time.get_ticks()
@@ -305,47 +302,48 @@ def unbeatable_ai():
                 blue_stun = True
                 blue_stun_cd = blue_stun_cd2
 
+        if blue_cd2 - blue_cd >= 400:
+            blue_able = True 
+            blue_cd = blue_cd2 
+            blue_frame = 0
+        
+        if red_cd2 - red_cd >=400:
+            red_able = True 
+            red_cd = red_cd2
+            red_frame = 0
+
         if blue.x >= 980:
             blue.x = 980
 
         if red.x <= 0:
-            red.x = 0
+            red.x = 0 
 
-        if keys_pressed[pygame.K_l] and blue_stun == True: #todo add a feature that adds CD to if pressed early and stun if hit 
-            blue_stun = False 
+        if keys_pressed[pygame.K_l] and blue_stun == True and blue_able == True: #todo add a feature that adds CD to if pressed early and stun if hit 
+            blue_stun = False
+            blue_able = True 
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
             blue_attack = pygame.Rect(blue.x - 20, blue.y, 10, 300)
             if blue_attack.colliderect(red):
                 punch_sound.play()
-                red_hp -= 10
+                red_hp -= 5
                 red_cd2 = 0
                 red_stun == False
                 blue_attack.y+=500
                 red.x-=60
 
-
-        if blue.x <= red.x + 170 and red_stun == True:
+        if keys_pressed[pygame.K_e]and red_stun == True:
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2
-            red_attack = pygame.Rect(red.x + 165, red.y, 10, 300)
-            if red_attack.colliderect(blue):
+            red_attack = pygame.Rect(red.x + 170, red.y, 10, 300)
+            if  red_attack.colliderect(blue):
                 punch_sound.play()
-                blue_hp -=10
+                blue_hp -=5
                 blue.x+= 60
                 blue_cd2 = 0
                 blue_stun == False 
                 red_attack.y += 500
-
-
-        if red.x <= blue.x - 20 and red.x + VELOCITY < blue.x - 90 and red.x-VELOCITY<= 1080 and red_stun == True:
-            red.x += VELOCITY 
-            if red_current_time - red_last_update >= red_animation_cooldown:
-                red_frame +=1 
-                red_last_update = red_current_time
-                if red_frame >= 2: 
-                    red_frame = 0
             
         if keys_pressed[pygame.K_LEFT] and blue.x + VELOCITY >= red.x + 115 and blue_stun == True:
             blue.x -= VELOCITY
@@ -379,6 +377,28 @@ def unbeatable_ai():
                 if red_frame >= 2:
                   red_frame = 0  
         
+        if blue.x <= red.x + 170 and red_stun == True:
+            red_stun = False 
+            red_cd2 = pygame.time.get_ticks()
+            red_frame = 2
+            red_attack = pygame.Rect(red.x + 165, red.y, 10, 300)
+            if red_attack.colliderect(blue):
+                punch_sound.play()
+                blue_hp -=10
+                blue.x+= 60
+                blue_cd2 = 0
+                blue_stun == False 
+                red_attack.y += 500
+
+
+        if red.x <= blue.x - 20 and red.x + VELOCITY < blue.x - 90 and red.x-VELOCITY<= 1080 and red_stun == True:
+            red.x += VELOCITY 
+            if red_current_time - red_last_update >= red_animation_cooldown:
+                red_frame +=1 
+                red_last_update = red_current_time
+                if red_frame >= 2: 
+                    red_frame = 0
+        
         winner_text =  '' 
 
         if blue_hp <=0:
@@ -399,6 +419,8 @@ def unbeatable_ai():
 
 
     pygame.quit() #? if loop breaks then exit the pygame
+            
+
 def med_ai():
     #todo: add damage and attacks 
     blue_hp = 100
