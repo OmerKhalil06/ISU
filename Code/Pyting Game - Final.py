@@ -33,8 +33,7 @@ blue_punch = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue3.png')), (220, 300))
 blue_punch2 = pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'blue4.png')), (220, 300))
-blue_kick = pygame.transform.scale(pygame.image.load(
-    os.path.join('Images', 'blue5.png')), (300, 300))
+
 
 red_fighter = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red1.png')), (220,300)), True, False)
@@ -44,8 +43,7 @@ red_punch = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red3.png')), (220,300)), True, False)
 red_punch2 = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
     os.path.join('Images', 'red4.png')), (220,300)), True, False)
-red_kick = pygame.transform.flip(pygame.transform.scale(pygame.image.load(
-    os.path.join('Images', 'red5.png')), (220,300)), True, False)
+
 
 
 #* sounds
@@ -55,8 +53,8 @@ punch_sound = pygame.mixer.Sound(os.path.join('Sounds', 'Punch.mp3'))
 
 #! function for all drawings 
 def draw_window(blue, red, blue_frame, red_frame, blue_hp,red_hp, blue_healthbar): #? draw window to create images 
-    blue_anim = [blue_fighter, blue_stand, blue_punch, blue_punch2, blue_kick]
-    red_anim = [red_fighter, red_back, red_punch, red_punch2, red_kick]
+    blue_anim = [blue_fighter, blue_stand, blue_punch, blue_punch2]
+    red_anim = [red_fighter, red_back, red_punch, red_punch2]
     WINDOW.blit(background, (0, 0)) #? background is drawn on window  
     
     #HP bars 
@@ -104,7 +102,6 @@ def main():
     
     frame_rate = pygame.time.Clock()
   
-    run = True 
     #! Cooldown 
     blue_cd = pygame.time.get_ticks()
     red_cd = pygame.time.get_ticks()
@@ -115,6 +112,7 @@ def main():
 
     red_stun_cd = pygame.time.get_ticks() 
     blue_stun_cd = pygame.time.get_ticks()
+    run = True 
 
     while run:
         #! updating animations 
@@ -163,8 +161,7 @@ def main():
             red.x = 0 
 
         if keys_pressed[pygame.K_l] and blue_stun == True and blue_able == True: #todo add a feature that adds CD to if pressed early and stun if hit 
-            blue_stun = False
-            blue_able = True 
+            blue_stun = False 
             blue_cd2 = pygame.time.get_ticks()
             blue_frame = 2 
             blue_attack = pygame.Rect(blue.x - 20, blue.y, 10, 300)
@@ -176,7 +173,7 @@ def main():
                 blue_attack.y+=500
                 red.x-=60
 
-        if keys_pressed[pygame.K_e]and red_stun == True:
+        if keys_pressed[pygame.K_e]and red_stun == True and red_able ==True:
             red_stun = False 
             red_cd2 = pygame.time.get_ticks()
             red_frame = 2
@@ -205,7 +202,7 @@ def main():
                 if blue_frame >= 2:
                     blue_frame = 0 
 
-        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 90 and red.x-VELOCITY<= 1080 and red_stun == True:
+        if keys_pressed[pygame.K_d] and red.x + VELOCITY < blue.x - 90 and red.x-VELOCITY<= 1080 and red_stun == True and red_able == True:
             red.x += VELOCITY 
             if red_current_time - red_last_update >= red_animation_cooldown:
                 red_frame +=1 
