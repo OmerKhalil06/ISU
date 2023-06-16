@@ -754,7 +754,7 @@ def easy_ai():
 #! main menu 
 #window 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Button Demo')
+pygame.display.set_caption('Menu')
 #load images 
 multi = pygame.image.load('Images/Multi.png').convert_alpha()
 single = pygame.image.load('Images/Single.png').convert_alpha()
